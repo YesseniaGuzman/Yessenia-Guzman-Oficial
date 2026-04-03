@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yessenia Guzmán · Promotora Independiente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0c0a14;
+      --bg2:#100e1c;
+      --bg3:#16132a;
+      --white:#f0eef8;
+      --gold:#c49a3c;
+      --gold2:#e2bd72;
+      --purple:#c5b8f0;
+      --purple2:#ddd5fa;
+      --purple-dim:#7b6faa;
+      --gray:#9b97b0;
+      --light:#1e1a30;
+      --card:#130f22;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 5vw;background:rgba(12,10,20,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(197,184,240,0.12)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;letter-spacing:.08em;color:var(--white);text-decoration:none}
+    .nav-logo span{color:var(--purple)}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:var(--purple)}
+
+    /* HERO */
+    #inicio{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      padding-top:72px;
+      overflow:hidden;
+    }
+    .hero-left{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:6vw 4vw 6vw 8vw;
+    }
+    .hero-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.6rem,4.5vw,4.5rem);
+      font-weight:300;
+      line-height:1.08;
+      opacity:0;
+      animation:fadeUp .8s .4s forwards;
+    }
+    .hero-title em{font-style:italic;color:var(--purple)}
+    .hero-sub{
+      margin-top:1.8rem;
+      font-size:.93rem;
+      color:var(--gray);
+      max-width:460px;
+      line-height:1.85;
+      opacity:0;
+      animation:fadeUp .8s .6s forwards;
+    }
+    .hero-name{
+      margin-top:2rem;
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.15rem;
+      font-weight:500;
+      letter-spacing:.04em;
+      opacity:0;
+      animation:fadeUp .8s .75s forwards;
+    }
+    .hero-name span{color:var(--purple)}
+
+    /* HERO RIGHT */
+    .hero-right{
+      position:relative;
+      background:var(--bg2);
+      overflow:hidden;
+      opacity:0;
+      animation:fadeIn 1.2s .3s forwards;
+    }
+    .hero-right::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:radial-gradient(ellipse at 60% 30%,rgba(197,184,240,.1) 0%,transparent 65%);
+    }
+    .hero-grid{
+      position:absolute;
+      inset:0;
+      opacity:.05;
+      background-image:linear-gradient(rgba(197,184,240,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(197,184,240,.5) 1px,transparent 1px);
+      background-size:40px 40px;
+    }
+    .hero-photo{
+      position:absolute;
+      bottom:0;
+      right:0;
+      left:0;
+      height:96%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+    }
+    .hero-photo img{
+      height:100%;
+      max-height:680px;
+      width:auto;
+      object-fit:cover;
+      object-position:top;
+      border-radius:16px 16px 0 0;
+      box-shadow:0 20px 60px rgba(0,0,0,0.5);
+      display:block;
+    }
+
+    /* FLOATING BUTTONS */
+    .float-buttons{
+      position:fixed;
+      bottom:22px;
+      right:22px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      z-index:999;
+    }
+    .wa-float{
+      background:#25D366;
+      color:#fff;
+      padding:.75rem 1.3rem;
+      border-radius:30px;
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      font-size:.82rem;
+      font-weight:500;
+      box-shadow:0 8px 25px rgba(0,0,0,0.35);
+      text-decoration:none;
+      transition:background .2s;
+    }
+    .wa-float:hover{background:#1ebe5d}
+    .ig-float{
+      background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+      color:#fff;
+      padding:.75rem 1.3rem;
+      border-radius:30px;
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      font-size:.82rem;
+      font-weight:500;
+      box-shadow:0 8px 25px rgba(0,0,0,0.35);
+      text-decoration:none;
+      transition:opacity .2s;
+    }
+    .ig-float:hover{opacity:.88}
+
+    /* PHRASES SECTION */
+    #frases{
+      padding:6rem 8vw;
+      background:var(--bg3);
+      border-top:1px solid rgba(197,184,240,.08);
+      border-bottom:1px solid rgba(197,184,240,.08);
+    }
+    .frases-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:2rem;
+      margin-top:3rem;
+    }
+    .frase-card{
+      border-left:2px solid rgba(197,184,240,.3);
+      padding:1.5rem 1.8rem;
+      position:relative;
+    }
+    .frase-card::before{
+      content:'"';
+      font-family:'Cormorant Garamond',serif;
+      font-size:4rem;
+      color:rgba(197,184,240,.15);
+      position:absolute;
+      top:-10px;
+      left:10px;
+      line-height:1;
+    }
+    .frase-text{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.1rem;
+      font-style:italic;
+      color:var(--purple2);
+      line-height:1.7;
+    }
+
+    /* IMAGE SLIDER */
+    #galeria{
+      padding:6rem 0;
+      background:var(--bg);
+      overflow:hidden;
+    }
+    .galeria-header{
+      padding:0 8vw 3rem;
+    }
+    .slider-wrapper{
+      position:relative;
+    }
+    .slider-track{
+      display:flex;
+      gap:1.5rem;
+      padding:0 8vw;
+      overflow-x:auto;
+      scroll-behavior:smooth;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+      cursor:grab;
+    }
+    .slider-track:active{cursor:grabbing}
+    .slider-track::-webkit-scrollbar{display:none}
+    .slide-item{
+      flex:0 0 320px;
+      height:480px;
+      border-radius:12px;
+      overflow:hidden;
+      position:relative;
+    }
+    .slide-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .5s ease;
+    }
+    .slide-item:hover img{transform:scale(1.04)}
+    .slide-item video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .slider-nav{
+      display:flex;
+      gap:1rem;
+      padding:2rem 8vw 0;
+      justify-content:flex-end;
+    }
+    .slider-btn{
+      width:48px;
+      height:48px;
+      border:1px solid rgba(197,184,240,.3);
+      border-radius:50%;
+      background:transparent;
+      color:var(--purple);
+      font-size:1.2rem;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:all .2s;
+    }
+    .slider-btn:hover{background:var(--purple);color:var(--bg)}
+
+    /* QUIEN SOY */
+    #quien-soy{padding:8rem 8vw;display:grid;grid-template-columns:1fr 1.6fr;gap:5vw;align-items:start;background:var(--bg2)}
+    .quien-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);padding-top:.3rem}
+    .quien-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:1.4rem;margin-top:.5rem;color:var(--white)}
+    .quien-title em{font-style:italic;color:var(--purple)}
+    .quien-text{font-size:.92rem;color:var(--gray);line-height:1.85;margin-bottom:1rem}
+    .quien-values{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+    .value-tag{padding:.35rem .9rem;border:1px solid rgba(197,184,240,.2);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);border-radius:2px}
+
+    /* SECTION SHARED */
+    .section-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);padding-top:.3rem}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:1.4rem;color:var(--white)}
+    .section-title em{font-style:italic;color:var(--purple)}
+    .section-text{font-size:.92rem;color:var(--gray);line-height:1.85;margin-bottom:1rem}
+    .section-header{margin-bottom:3.5rem}
+
+    /* DIVIDER */
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(197,184,240,.3),transparent);margin:0 8vw}
+
+    /* CONTACTO */
+    #contacto{padding:8rem 8vw;display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:start;background:var(--bg3)}
+    .contact-info{margin-top:2.5rem;display:flex;flex-direction:column;gap:1.2rem}
+    .contact-item{display:flex;align-items:flex-start;gap:1rem}
+    .contact-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:.3rem}
+    .contact-item-text{font-size:.9rem;color:var(--gray)}
+    .contact-item-text a{color:var(--gray);text-decoration:none;transition:color .2s}
+    .contact-item-text a:hover{color:var(--purple)}
+    .contact-form{display:flex;flex-direction:column;gap:1.1rem}
+    .form-group{display:flex;flex-direction:column;gap:.35rem}
+    .form-group label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+    .form-group input,.form-group textarea{background:var(--light);border:1px solid rgba(197,184,240,.1);padding:.82rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s;resize:none}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:var(--purple-dim);opacity:.6}
+    .form-group input:focus,.form-group textarea:focus{border-color:var(--purple)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+    .btn-submit{padding:.88rem 2.5rem;background:var(--purple);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;align-self:flex-start;transition:background .25s;font-weight:500}
+    .btn-submit:hover{background:var(--purple2)}
+
+    /* FOOTER */
+    footer{background:var(--bg);padding:3rem 8vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;border-top:1px solid rgba(197,184,240,.08)}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--white);letter-spacing:.08em}
+    .footer-logo span{color:var(--purple)}
+    .footer-legal{font-size:.7rem;color:rgba(240,238,248,.22);line-height:1.7;max-width:500px;text-align:center}
+    .footer-copy{font-size:.7rem;color:rgba(240,238,248,.22)}
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      #inicio{grid-template-columns:1fr}
+      .hero-right{height:80vw}
+      #quien-soy{grid-template-columns:1fr}
+      .frases-grid{grid-template-columns:1fr}
+      #contacto{grid-template-columns:1fr}
+      footer{flex-direction:column;text-align:center}
+      .nav-links{display:none}
+      .hero-photo img{max-height:420px}
+      .slide-item{flex:0 0 260px;height:380px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="nav-logo">Yessenia <span>Guzmán</span></a>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#quien-soy">Sobre mí</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-left">
+    <h1 class="hero-title">
+      Construye una vida libre,<br/>
+      donde tu ingreso<br/>
+      no dependa de <em>tu tiempo</em>
+    </h1>
+    <p class="hero-sub">
+      No necesitas experiencia ni grandes inversiones para comenzar.<br><br>
+      Te guío paso a paso para que desarrolles disciplina, mentalidad y habilidades que te permitan generar ingresos en el mundo digital.<br><br>
+      Este no es solo un negocio, es un proceso de transformación personal y financiera.
+    </p>
+    <p class="hero-name">Mentora en Crecimiento Financiero · <span>Yessenia Guzmán</span></p>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-grid"></div>
+    <div class="hero-photo">
+      <img src="foto2.jpg" alt="Yessenia Guzmán"/>
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING BUTTONS -->
+<div class="float-buttons">
+  <a href="https://wa.me/50369843758" target="_blank" class="wa-float">
+    💬 WhatsApp
+  </a>
+  <a href="https://www.instagram.com/guzmanyessennia" target="_blank" class="ig-float">
+    📸 Instagram
+  </a>
+</div>
+
+<div class="divider"></div>
+
+<!-- FRASES -->
+<section id="frases">
+  <div class="section-header reveal">
+    <p class="section-label">Mi Visión</p>
+    <h2 class="section-title">Evolución <em>personal</em> y financiera</h2>
+  </div>
+  <div class="frases-grid">
+    <div class="frase-card reveal">
+      <p class="frase-text">Acompaño a personas a desarrollar una mentalidad sólida, construir ingresos inteligentes y crear una vida alineada con su propósito.</p>
+    </div>
+    <div class="frase-card reveal">
+      <p class="frase-text">Más que una oportunidad, un camino de evolución personal y financiera.</p>
+    </div>
+    <div class="frase-card reveal">
+      <p class="frase-text">Guiando a individuos hacia su máximo potencial, dentro y fuera del ámbito financiero.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE SLIDER -->
+<section id="galeria">
+  <div class="galeria-header reveal">
+    <p class="section-label">Inspiración</p>
+    <h2 class="section-title">Eleva tu <em>estándar</em></h2>
+  </div>
+  <div class="slider-wrapper">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide-item">
+        <img src="IMAGEN_1.jpeg" alt="Eleva tu estándar financiero y personal"/>
+      </div>
+      <div class="slide-item">
+        <img src="IMAGEN_2.jpeg" alt="Cada decisión financiera te acerca a la vida que deseas"/>
+      </div>
+      <div class="slide-item">
+        <img src="IMAGEN_3.jpeg" alt="La libertad está en ser dueños de nuestra propia vida"/>
+      </div>
+      <div class="slide-item">
+        <video autoplay muted loop playsinline>
+          <source src="IMAGEN_4.mp4" type="video/mp4"/>
+        </video>
+      </div>
+    </div>
+  </div>
+  <div class="slider-nav">
+    <button class="slider-btn" id="prevBtn">&#8592;</button>
+    <button class="slider-btn" id="nextBtn">&#8594;</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUIEN SOY -->
+<section id="quien-soy">
+  <div class="reveal">
+    <p class="quien-label">Sobre Mí</p>
+    <h2 class="quien-title">¿Quién <em>soy?</em></h2>
+  </div>
+  <div class="reveal">
+    <p class="quien-text">Soy una mujer comprometida con el crecimiento constante, guiando a personas que desean transformar su mentalidad, elevar su vida financiera y reconectar con su propósito.</p>
+    <p class="quien-text">Mi enfoque va más allá de los resultados económicos: creo en el desarrollo integral, donde la disciplina, la educación y la conciencia se convierten en la base de una vida en expansión.</p>
+    <p class="quien-text">Hoy formo parte de una visión global que conecta oportunidades con personas decididas a construir una realidad diferente.</p>
+    <div class="quien-values">
+      <div class="value-tag">💡 Inversiones</div>
+      <div class="value-tag">🌿 Mindfulness</div>
+      <div class="value-tag">📈 Personal Growth</div>
+      <div class="value-tag">🌐 Global Community</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contact-left reveal">
+    <p class="section-label">Contacto Directo</p>
+    <h2 class="section-title">Hablemos de<br/>tu <em>oportunidad</em></h2>
+    <p class="section-text">Estoy aquí para acompañarte en cada paso. Escríbeme y encontramos juntos el camino ideal para ti.</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <span class="contact-item-text"><strong style="color:var(--purple2);font-weight:400">Yessenia Guzmán</strong><br/>Promotora Independiente</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <span class="contact-item-text"><a href="https://wa.me/50369843758" target="_blank">+503 6984 3758 · WhatsApp</a></span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <span class="contact-item-text"><a href="https://www.instagram.com/guzmanyessennia" target="_blank">@guzmanyessennia · Instagram</a></span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <span class="contact-item-text">San Salvador, El Salvador</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-form reveal">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" placeholder="Tu nombre"/>
+      </div>
+      <div class="form-group">
+        <label>Apellido</label>
+        <input type="text" placeholder="Tu apellido"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Correo electrónico</label>
+      <input type="email" placeholder="correo@ejemplo.com"/>
+    </div>
+    <div class="form-group">
+      <label>Teléfono / WhatsApp</label>
+      <input type="tel" placeholder="+503 0000-0000"/>
+    </div>
+    <div class="form-group">
+      <label>¿En qué área deseas crecer?</label>
+      <input type="text" placeholder="Finanzas, Mindfulness, Inversiones, Comunidad…"/>
+    </div>
+    <div class="form-group">
+      <label>Mensaje</label>
+      <textarea rows="4" placeholder="¿En qué puedo acompañarte?"></textarea>
+    </div>
+    <button class="btn-submit" onclick="enviarCorreo()">Enviar mensaje</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Yessenia <span>Guzmán</span></div>
+  <div class="footer-legal">
+    Página personal de Yessenia Guzmán, Promotora Independiente. Comprometida con el crecimiento personal, financiero y espiritual de quienes forman parte de esta comunidad global.
+  </div>
+  <div class="footer-copy">© 2026 · Yessenia Guzmán</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, {threshold: 0.12});
+  reveals.forEach(r => observer.observe(r));
+
+  // Slider
+  const track = document.getElementById('sliderTrack');
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    track.scrollBy({left: 340, behavior: 'smooth'});
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    track.scrollBy({left: -340, behavior: 'smooth'});
+  });
+
+  // Drag to scroll
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  track.addEventListener('mouseleave', () => isDown = false);
+  track.addEventListener('mouseup', () => isDown = false);
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX);
+  });
+
+  // Enviar correo
+  function enviarCorreo() {
+    const nombre = document.querySelector('#contacto input[placeholder="Tu nombre"]').value;
+    const apellido = document.querySelector('#contacto input[placeholder="Tu apellido"]').value;
+    const email = document.querySelector('#contacto input[type="email"]').value;
+    const telefono = document.querySelector('#contacto input[type="tel"]').value;
+    const servicio = document.querySelector('#contacto input[placeholder*="Finanzas"]').value;
+    const mensaje = document.querySelector('#contacto textarea').value;
+    if (!nombre || !email || !mensaje) {
+      alert('Por favor completa al menos tu nombre, correo y mensaje.');
+      return;
+    }
+    const asunto = encodeURIComponent('Consulta desde tu página web - ' + nombre + ' ' + apellido);
+    const cuerpo = encodeURIComponent(
+      'Nombre: ' + nombre + ' ' + apellido + '\n' +
+      'Correo: ' + email + '\n' +
+      'Teléfono: ' + telefono + '\n' +
+      'Área de interés: ' + servicio + '\n\n' +
+      'Mensaje:\n' + mensaje
+    );
+    window.location.href = 'mailto:yesseniaguzman@email.com?subject=' + asunto + '&body=' + cuerpo;
+  }
+</script>
+</body>
+</html>
